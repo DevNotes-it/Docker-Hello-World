@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - github-actions-ci-cd
+permissions:
+  packages: write
 
 jobs:
   build:
@@ -30,9 +32,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-
     - name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
         context: .
         push: true
