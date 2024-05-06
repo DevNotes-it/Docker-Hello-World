@@ -4,8 +4,9 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
-
+    branches:
+      - github-actions-ci-cd
+    
 permissions:
   packages: write
 
