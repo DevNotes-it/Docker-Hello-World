@@ -37,4 +37,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ github.sha }}
+        tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ github.ref_name }}
