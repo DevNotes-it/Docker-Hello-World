@@ -1,10 +1,9 @@
-name: Docker
+name: Prod release
 
 on:
   push:
-    branches:
-      - main
-      - github-actions-ci-cd
+    tags:
+      - 'v*'
 
 permissions:
   packages: write
@@ -38,4 +37,14 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ github.sha }}
+        tags: ghcr.io/${{ github.repository }}:${{ github.ref }}
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ghcr.io/${{ github.repository }}:${{ github.ref }}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
