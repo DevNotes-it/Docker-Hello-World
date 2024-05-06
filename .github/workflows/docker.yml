@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: set lower case Github repository name
+      run: |
+        echo "GH_REPO_LC=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+      env:
+        GITHUB_REPOSITORY: '${{ github.repository }}'
+
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -24,9 +30,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+        tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ github.sha }}
