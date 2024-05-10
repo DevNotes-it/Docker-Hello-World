@@ -34,6 +34,7 @@ jobs:
           echo "ref_name {{ github.ref_name }}"
           echo "GITHUB_REF=${GITHUB_REF}"
           echo "TAG_NAME=${GITHUB_REF#refs/heads/}" >>${GITHUB_ENV}
+          echo "TAG_NAME=${TAG_NAME}"
           echo "TAG_NAME=${TAG_NAME//\//-}" >>${GITHUB_ENV}
         env:
           GITHUB_REF: ${{ github.ref_name }}
