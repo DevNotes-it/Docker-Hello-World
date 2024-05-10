@@ -29,10 +29,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare Image tag name 
+        run: |
+          echo "TAG_NAME=${GITHUB_REF#refs/heads/}" >>${GITHUB_ENV}
+          echo "TAG_NAME=${TAG_NAME//\//-}" >>${GITHUB_ENV}
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
       - name: Build Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ github.ref_name }}
+          tags: ghcr.io/${{ env.GH_REPO_LC }}:${{ env.TAG_NAME }}
