@@ -32,6 +32,7 @@ jobs:
       - name: Prepare Image tag name 
         run: |
           echo ${{GITHUB_REF}}
+          echo "ref_name {{ github.ref_name }}"
           echo "TAG_NAME=${GITHUB_REF#refs/heads/}" >>${GITHUB_ENV}
           echo "TAG_NAME=${TAG_NAME//\//-}" >>${GITHUB_ENV}
         env:
