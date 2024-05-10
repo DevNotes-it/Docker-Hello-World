@@ -83,6 +83,8 @@ jobs:
           # Creating new environment variable
           echo "TAG_NAME=$BRANCH_NAME_LOWER" >> $GITHUB_ENV
 
+          echo "TAG_NAME=$TAG_NAME"
+
         env:
           GITHUB_REF: ${{ github.ref_name }}
 
