@@ -73,8 +73,12 @@ jobs:
           # Extracting the substring after "refs/heads/"
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
 
+          echo "BRANCH_NAME_LOWER=$BRANCH_NAME"
+
           # Converting to lower case and replacing '/' with '-'
           BRANCH_NAME_LOWER=$(echo "$BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | sed 's|/|-|g')
+
+          echo "BRANCH_NAME_LOWER=$BRANCH_NAME_LOWER"
 
           # Creating new environment variable
           echo "TAG_NAME=$BRANCH_NAME_LOWER" >> $GITHUB_ENV
