@@ -31,11 +31,11 @@ jobs:
 
       - name: Prepare Image tag name 
         run: |
-          echo "ref_name {{ github.ref_name }}"
           echo "GITHUB_REF=${GITHUB_REF}"
-          echo "TAG_NAME=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-          echo "TAG_NAME=${TAG_NAME}"
-          echo "TAG_NAME=${TAG_NAME//\//-}" >>${GITHUB_ENV}
+          echo "BRANCH_NAME="${GITHUB_REF#refs/heads/}" 
+          echo "BRANCH_NAME=${BRANCH_NAME}"
+          echo "TAG_NAME=$(echo \"$BRANCH_NAME\" | tr '[:upper:]' '[:lower:]')"
+          echi "TAG_NAME=${TAG_NAME}"
         env:
           GITHUB_REF: ${{ github.ref_name }}
 
