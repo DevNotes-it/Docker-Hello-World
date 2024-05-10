@@ -34,7 +34,7 @@ jobs:
           echo "TAG_NAME=${GITHUB_REF#refs/heads/}" >>${GITHUB_ENV}
           echo "TAG_NAME=${TAG_NAME//\//-}" >>${GITHUB_ENV}
         env:
-          GITHUB_REF: ${{ github.ref }}
+          GITHUB_REF: ${{ github.ref_name }}
 
       - name: Build Docker image
         uses: docker/build-push-action@v3
