@@ -29,13 +29,19 @@ jobs:
       #     username: ${{ github.actor }}
       #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare Image tag name 
+      - name: Extract branch name and set as env var
         run: |
-          echo "GITHUB_REF=${GITHUB_REF}"
-          echo "BRANCH_NAME="${GITHUB_REF#refs/heads/}" 
-          echo "BRANCH_NAME=${BRANCH_NAME}"
-          echo "TAG_NAME=$(echo \"$BRANCH_NAME\" | tr '[:upper:]' '[:lower:]')"
-          echi "TAG_NAME=${TAG_NAME}"
+          # Extracting the substring after "refs/heads/"
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          
+          # Converting to lower case
+          BRANCH_NAME_LOWER=$(echo "$BRANCH_NAME" | tr '[:upper:]' '[:lower:]')
+          
+          # Creating new environment variable
+          echo "NEW_BRANCH_NAME=$BRANCH_NAME_LOWER" >> $GITHUB_ENV
+
+          echo "BRANCH_NAME=$BRANCH_NAME" 
+
         env:
           GITHUB_REF: ${{ github.ref_name }}
 
